@@ -1,7 +1,7 @@
 export interface NodeIntarface {
     deviceId: string;
-    keepDataStatus: boolean;
-    releaseDataStatus: boolean;
+    keepDataStatus: string | null;
+    releaseDataStatus: string | null;
     radius: number;
     longitude: number;
     latitude: number;
@@ -20,4 +20,10 @@ export interface RoutesPathInterface {
 export interface PersonRouteInterface {
     deviceId: string;
     segmentsroute: RoutesPathInterface[];
+}
+
+export interface SimulationAgentData {
+  deviceId: string;
+  longitude: number;
+  latitude: number;
 }

@@ -1,39 +1,18 @@
 'use client'
+import { NodeIntarface } from '../type/data-simulation'
 import NodeSimulation from './node-simulation'
 
-export default function SimulationDetails() {
+export default function SimulationDetails({ data }: { data: NodeIntarface[] }) {
     return (
         <div className="pt-5 w-full">
-            <NodeSimulation
-                devicename="device-1"
-                finishedBroadcasting={true}
-                isKeepData={true}
-            />
-            <NodeSimulation
-                devicename="device-2"
-                finishedBroadcasting={true}
-                isKeepData={true}
-            />
-            <NodeSimulation
-                devicename="device-3"
-                finishedBroadcasting={true}
-                isKeepData={true}
-            />
-            <NodeSimulation
-                devicename="bus-1"
-                finishedBroadcasting={true}
-                isKeepData={true}
-            />
-            <NodeSimulation
-                devicename="bus-2"
-                finishedBroadcasting={true}
-                isKeepData={true}
-            />
-            <NodeSimulation
-                devicename="connector-1"
-                finishedBroadcasting={true}
-                isKeepData={true}
-            />
+            {data.map(node => (
+                <NodeSimulation
+                    key={node.deviceId}
+                    devicename={node.deviceId}
+                    isKeepData={node.keepDataStatus}
+                    finishedBroadcasting={node.releaseDataStatus}
+                />
+            ))}
         </div>
     )
 }

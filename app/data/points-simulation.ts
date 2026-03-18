@@ -175,28 +175,28 @@ export const RoutePerson1 :PersonRouteInterface = {
 }
 
 export const RoutePerson2 :PersonRouteInterface = {
-    deviceId: 'device-2',
+    deviceId: 'device-3',
     segmentsroute: [
         SegementBroadcaster1Route,
     ]
 }
 
 export const RoutePerson3 :PersonRouteInterface = {
-    deviceId: 'device-3',
+    deviceId: 'device-5',
     segmentsroute: [
         SegementBroadcaster2Route,
     ]
 }
 
 export const RoutePerson4 :PersonRouteInterface = {
-    deviceId: 'device-4',
+    deviceId: 'device-2',
     segmentsroute: [
         SegementBroadcaster3Route,
     ]
 }
 
 export const RoutePerson5 :PersonRouteInterface = {
-    deviceId: 'device-5',
+    deviceId: 'device-4',
     segmentsroute: [
         SegementBroadcaster4Route,
     ]

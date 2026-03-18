@@ -17,8 +17,9 @@ import {
     RoutePersonConnector,
 } from "../data/points-simulation";
 import { flattenRoute, haversineDistanceMeters } from "../helper/simulation-helper";
+import { NodeIntarface } from "../type/data-simulation";
 
-export default function SimulationMap() {
+export default function SimulationMap({ onNodesUpdate }: { onNodesUpdate: (node: NodeIntarface[]) => void }) {
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
     const mapRef = useRef<maplibregl.Map | null>(null);
 
@@ -29,8 +30,8 @@ export default function SimulationMap() {
         const map = new maplibregl.Map({
             container: mapContainerRef.current,
             style: `https://api.maptiler.com/maps/base-v4/style.json?key=${process.env.NEXT_PUBLIC_TOKEN_MAP}`,
-            center: [110.37912969566156, -7.940984246579163],
-            zoom: 15,
+            center: [110.38070392918286, -7.939076516116231],
+            zoom: 16,
             attributionControl: false,
         });
 
@@ -151,6 +152,11 @@ export default function SimulationMap() {
 
                 const features = geojson.features;
 
+                const connections: Record<string, Set<string>> = {};
+                agents.forEach(a => {
+                    connections[a.deviceId] = new Set();
+                });
+
                 for (let i = 0; i < features.length; i++) {
                     for (let j = i + 1; j < features.length; j++) {
 
@@ -158,13 +164,18 @@ export default function SimulationMap() {
                         const coordB = features[j].geometry.coordinates;
 
                         const dist = haversineDistanceMeters(
-                            coordA[0],
-                            coordA[1],
-                            coordB[0],
-                            coordB[1]
+                            coordA[0], coordA[1],
+                            coordB[0], coordB[1]
                         );
 
                         if (dist <= 50) {
+
+                            const idA = (features[i].properties as any).deviceId;
+                            const idB = (features[j].properties as any).deviceId;
+
+                            connections[idA].add(idB);
+                            connections[idB].add(idA);
+
                             connectionLines.features.push({
                                 type: "Feature",
                                 geometry: {
@@ -176,6 +187,35 @@ export default function SimulationMap() {
                         }
                     }
                 }
+
+                const nodeState: NodeIntarface[] = agents.map((agent, i) => {
+
+                    const feature = features[i];
+                    const coord = feature.geometry.coordinates;
+
+                    const connectedDevices = Array.from(
+                        connections[agent.deviceId]
+                    );
+
+                    return {
+                        deviceId: agent.deviceId,
+                        longitude: coord[0],
+                        latitude: coord[1],
+                        radius: 200,
+
+                        keepDataStatus:
+                            connectedDevices.length > 0
+                                ? connectedDevices.join(", ")
+                                : null,
+
+                        releaseDataStatus:
+                            connectedDevices.length === 0
+                                ? "keep-data"
+                                : "broadcasting",
+                    };
+                });
+
+                onNodesUpdate?.(nodeState);
 
                 (map.getSource("persons") as maplibregl.GeoJSONSource)
                     .setData(geojson);
@@ -197,7 +237,7 @@ export default function SimulationMap() {
             map.remove();
             mapRef.current = null;
         };
-    }, []);
+    }, [onNodesUpdate]);
 
     return (
         <div className="w-full h-full">

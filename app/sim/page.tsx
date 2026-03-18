@@ -1,5 +1,5 @@
-import SimulationDetails from "./component/simulation-details";
-import SimulationMap from "./component/simulation-map";
+import SimulationDetails from "../component/simulation-details";
+import SimulationMap from "../component/simulation-map";
 
 export default function Page() {
   return (

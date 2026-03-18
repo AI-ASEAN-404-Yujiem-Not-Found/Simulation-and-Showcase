@@ -6,7 +6,14 @@ import type { FeatureCollection, Point } from "geojson";
 import React, { useEffect, useRef } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { RoutePerson1, RoutePerson2, RoutePerson3, RoutePerson4, RoutePerson5 } from "../data/points-simulation";
+import { 
+    RoutePerson1, 
+    RouteBus1, 
+    RoutePerson2, 
+    RoutePerson3, 
+    RouteBus2,
+    RoutePersonConnector
+ } from "../data/points-simulation";
 import { flattenRoute } from "../helper/simulation-helper";
 
 export default function SimulationMap() {
@@ -21,7 +28,7 @@ export default function SimulationMap() {
             container: mapContainerRef.current,
             style: `https://api.maptiler.com/maps/base-v4/style.json?key=${process.env.NEXT_PUBLIC_TOKEN_MAP}`,
             center: [110.37912969566156, -7.940984246579163],
-            zoom: 17,
+            zoom: 15,
             attributionControl: false,
         });
 
@@ -32,11 +39,12 @@ export default function SimulationMap() {
         map.on("load", () => {
 
             const persons = [
+                RouteBus1,
                 RoutePerson1,
                 RoutePerson2,
                 RoutePerson3,
-                RoutePerson4,
-                RoutePerson5,
+                RouteBus2,
+                RoutePersonConnector
             ];
 
             const agents = persons.map((p) => ({
@@ -118,7 +126,7 @@ export default function SimulationMap() {
                 const source = map.getSource("persons") as maplibregl.GeoJSONSource;
                 source.setData(geojson);
 
-            }, 2500);
+            }, 1000);
 
             map.on("remove", () => clearInterval(interval));
         });

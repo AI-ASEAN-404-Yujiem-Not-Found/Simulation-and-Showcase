@@ -3,16 +3,21 @@ export interface NodeIntarface {
     keepDataStatus: boolean;
     releaseDataStatus: boolean;
     radius: number;
-    latitude: number;
     longitude: number;
+    latitude: number;
 }
 
-export interface RouteInterface {
-    latitude: number;
+export interface PointRouteInterface {
     longitude: number;
+    latitude: number;
 }
 
 export interface RoutesPathInterface {
     pathName: string;
-    routes: RouteInterface[];
+    routes: PointRouteInterface[];
+}
+
+export interface PersonRouteInterface {
+    deviceId: string;
+    segmentsroute: RoutesPathInterface[];
 }

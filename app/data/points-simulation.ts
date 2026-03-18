@@ -12,6 +12,14 @@ export const Broadcaster2Points: PointRouteInterface[] = [
     {longitude: 110.37903292000232, latitude:-7.939608494343517}
 ]
 
+export const Broadcaster3Points: PointRouteInterface[] = [
+    {longitude: 110.37816138293437, latitude:-7.939466343866684}
+]
+
+export const Broadcaster4Points: PointRouteInterface[] = [
+    {longitude: 110.37873143551633, latitude:-7.9394600706629035}
+]
+
 export const ConnectorPoints: PointRouteInterface[] = [
     {longitude: 110.38136612334523, latitude:-7.936935660927347}
 ]
@@ -99,6 +107,17 @@ export const SegementBroadcaster2Route : RoutesPathInterface = {
     routes: Broadcaster2Points
 }
 
+export const SegementBroadcaster3Route : RoutesPathInterface = {
+    pathName: 'segment0',
+    routes: Broadcaster3Points
+}
+
+export const SegementBroadcaster4Route : RoutesPathInterface = {
+    pathName: 'segment0',
+    routes: Broadcaster4Points
+}
+
+
 export const SegementConnectorRoute : RoutesPathInterface = {
     pathName: 'segment0',
     routes: ConnectorPoints
@@ -166,6 +185,20 @@ export const RoutePerson3 :PersonRouteInterface = {
     deviceId: 'device-3',
     segmentsroute: [
         SegementBroadcaster2Route,
+    ]
+}
+
+export const RoutePerson4 :PersonRouteInterface = {
+    deviceId: 'device-4',
+    segmentsroute: [
+        SegementBroadcaster3Route,
+    ]
+}
+
+export const RoutePerson5 :PersonRouteInterface = {
+    deviceId: 'device-5',
+    segmentsroute: [
+        SegementBroadcaster4Route,
     ]
 }
 

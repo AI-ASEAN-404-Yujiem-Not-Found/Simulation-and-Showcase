@@ -1,20 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import type { FeatureCollection, Point } from "geojson";
+import type { FeatureCollection, Point, LineString } from "geojson";
 
 import React, { useEffect, useRef } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { 
-    RoutePerson1, 
-    RouteBus1, 
-    RoutePerson2, 
-    RoutePerson3, 
+import {
+    RoutePerson1,
+    RoutePerson2,
+    RoutePerson3,
+    RoutePerson4,
+    RoutePerson5,
+    RouteBus1,
     RouteBus2,
-    RoutePersonConnector
- } from "../data/points-simulation";
-import { flattenRoute } from "../helper/simulation-helper";
+    RoutePersonConnector,
+} from "../data/points-simulation";
+import { flattenRoute, haversineDistanceMeters } from "../helper/simulation-helper";
 
 export default function SimulationMap() {
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
@@ -39,10 +41,12 @@ export default function SimulationMap() {
         map.on("load", () => {
 
             const persons = [
-                RouteBus1,
                 RoutePerson1,
                 RoutePerson2,
                 RoutePerson3,
+                RoutePerson4,
+                RoutePerson5,
+                RouteBus1,
                 RouteBus2,
                 RoutePersonConnector
             ];
@@ -68,6 +72,11 @@ export default function SimulationMap() {
                         deviceId: a.deviceId,
                     },
                 })),
+            };
+
+            const connectionLines: FeatureCollection<LineString> = {
+                type: "FeatureCollection",
+                features: [],
             };
 
             map.addSource("persons", {
@@ -104,8 +113,23 @@ export default function SimulationMap() {
                 },
             });
 
-            const interval = setInterval(() => {
+            map.addSource("connections", {
+                type: "geojson",
+                data: connectionLines,
+            });
 
+            map.addLayer({
+                id: "connections-layer",
+                type: "line",
+                source: "connections",
+                paint: {
+                    "line-color": "#34C759",
+                    "line-width": 2,
+                    "line-opacity": 0.8,
+                },
+            });
+
+            const interval = setInterval(() => {
                 geojson.features.forEach((feature: any, i: number) => {
                     const agent = agents[i];
 
@@ -123,8 +147,41 @@ export default function SimulationMap() {
                     ];
                 });
 
-                const source = map.getSource("persons") as maplibregl.GeoJSONSource;
-                source.setData(geojson);
+                connectionLines.features = [];
+
+                const features = geojson.features;
+
+                for (let i = 0; i < features.length; i++) {
+                    for (let j = i + 1; j < features.length; j++) {
+
+                        const coordA = features[i].geometry.coordinates;
+                        const coordB = features[j].geometry.coordinates;
+
+                        const dist = haversineDistanceMeters(
+                            coordA[0],
+                            coordA[1],
+                            coordB[0],
+                            coordB[1]
+                        );
+
+                        if (dist <= 50) {
+                            connectionLines.features.push({
+                                type: "Feature",
+                                geometry: {
+                                    type: "LineString",
+                                    coordinates: [coordA, coordB],
+                                },
+                                properties: {},
+                            });
+                        }
+                    }
+                }
+
+                (map.getSource("persons") as maplibregl.GeoJSONSource)
+                    .setData(geojson);
+
+                (map.getSource("connections") as maplibregl.GeoJSONSource)
+                    .setData(connectionLines);
 
             }, 1000);
 

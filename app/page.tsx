@@ -5,6 +5,9 @@ import PhoneFrame from "./component/phone-frame";
 import TypingEffectCommand from "./component/typing-effect";
 import { StartingData } from "./data/text-dummy-log";
 
+import SplashScreen from "./component/simulation-screen/splash-screen";
+import STTScreen from "./component/simulation-screen/stt-screen";
+
 export default function Page() {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -13,8 +16,8 @@ export default function Page() {
       <div className="w-full h-full flex items-start justify-between gap-5">
 
         <div className="w-full h-full xl:w-[60%] flex justify-center items-center">
-          <PhoneFrame>
-            <div>Hallo world</div>
+          <PhoneFrame needBottomNav={true}>
+            <STTScreen />
           </PhoneFrame>
         </div>
 

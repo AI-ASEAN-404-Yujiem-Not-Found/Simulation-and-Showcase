@@ -27,3 +27,8 @@ export interface SimulationAgentData {
   longitude: number;
   latitude: number;
 }
+
+export interface TextData {
+    time: number;
+    content: string;
+}

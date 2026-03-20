@@ -6,7 +6,7 @@ import { FaRegUser } from "react-icons/fa6";
 
 export default function BottomNavigation() {
   return (
-    <div className="w-full h-full px-5 grid grid-cols-5 border border-gray-300 rounded-t-2xl gap-2 p-2">
+    <div className="w-full h-full px-5 grid grid-cols-5 border border-gray-300 rounded-t-2xl gap-2 p-2 bg-white">
       <div className="w-full rounded-md flex flex-col justify-center items-center gap-2">
         <IoHomeOutline className="w-2.5 h-2.5" />
         <p className="text-[5px]">Home</p>

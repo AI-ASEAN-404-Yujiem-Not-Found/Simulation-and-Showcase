@@ -1,5 +1,6 @@
 'use client'
 
+import { ScreenNames, TextData } from '@/app/type/data-simulation';
 import React from 'react';
 import { CiMicrophoneOn } from 'react-icons/ci';
 import { FaChevronLeft } from "react-icons/fa";
@@ -43,7 +44,10 @@ function ChanceFormHeader() {
     );
 }
 
-export default function MultiChoiceScreen() {
+export default function MultiChoiceScreen(
+    { controlNavigate, addMessagesControll }:
+        { controlNavigate: (d: ScreenNames) => void; addMessagesControll: (m: TextData) => void }
+) {
     return (
         <div className='w-full pb-6'>
             <ChanceFormHeader />

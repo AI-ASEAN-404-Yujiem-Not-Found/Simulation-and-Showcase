@@ -6,6 +6,7 @@ import Image from 'next/image';
 
 import { IoMdInformationCircle } from "react-icons/io";
 import { FaChevronRight } from "react-icons/fa";
+import { ScreenNames, TextData } from "@/app/type/data-simulation";
 
 function OfflineSafeBadge() {
     return (
@@ -46,7 +47,10 @@ function ExploreWaysHeader() {
 }
 
 
-export default function SaveModeScreen() {
+export default function SaveModeScreen(
+    { controlNavigate, addMessagesControll }:
+        { controlNavigate: (d: ScreenNames) => void; addMessagesControll: (m: TextData) => void }
+) {
     return (
         <div className='w-full pb-6'>
 

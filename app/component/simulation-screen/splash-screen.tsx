@@ -1,6 +1,19 @@
+import { ScreenNames, TextData } from '@/app/type/data-simulation'
 import Image from 'next/image'
 
-export default function SplashScreen() {
+export default function SplashScreen(
+    { controlNavigate, addMessagesControll }:
+        { controlNavigate: (d: ScreenNames) => void; addMessagesControll: (m: TextData) => void }
+) {
+    const handleGetStarted = () => {
+        addMessagesControll({
+            time: 10,
+            content: "User clicked GET STARTED on Splash Screen"
+        })
+
+        controlNavigate("stt")
+    }
+
     return (
         <div className="w-full h-full flex flex-col justify-center items-center bg-[#FEFEFF] px-4">
             <div className="w-full">
@@ -15,7 +28,7 @@ export default function SplashScreen() {
                 </div>
 
                 <div className="w-full flex flex-col justify-center items-center gap-3 text-center pt-15.75 text-[10px]">
-                    <button className="p-1 w-full max-w-100 bg-[#004868] text-white rounded-md">
+                    <button className="p-1 w-full max-w-100 bg-[#004868] text-white rounded-md" onClick={handleGetStarted}>
                         GET STARTED
                     </button>
                     <p className="text-[10px]">I ALREADY HAVE AN ACCOUNT</p>

@@ -4,6 +4,7 @@ import { HiSparkles } from "react-icons/hi2";
 import { FaTractor } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 import { MdNotificationsNone } from "react-icons/md";
+import { ScreenNames, TextData } from '@/app/type/data-simulation';
 
 function OnBoardingCard() {
     return (
@@ -69,7 +70,10 @@ function OnboardingHeader() {
     )
 }
 
-export default function WelcomingScreen() {
+export default function WelcomingScreen(
+    { controlNavigate, addMessagesControll }:
+        { controlNavigate: (d: ScreenNames) => void; addMessagesControll: (m: TextData) => void }
+) {
     return (
         <div className='w-full pb-2'>
 

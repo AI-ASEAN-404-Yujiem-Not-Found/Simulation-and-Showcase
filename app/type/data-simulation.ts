@@ -32,3 +32,11 @@ export interface TextData {
     time: number;
     content: string;
 }
+
+export interface ScreenSimulationPairing {
+    children: React.ReactNode;
+    needbotnav: boolean;
+    name: ScreenNames;
+}
+
+export type ScreenNames = "splash" | "stt" | "welcome" | "multichoice" | "tryit" | "savemode"

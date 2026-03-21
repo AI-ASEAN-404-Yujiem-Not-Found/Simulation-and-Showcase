@@ -7,6 +7,7 @@ import { FaCheck, FaTractor } from 'react-icons/fa6';
 import { RiSparkling2Fill } from 'react-icons/ri';
 import { PiBagFill } from 'react-icons/pi';
 import { IoIosDocument } from 'react-icons/io';
+import { ScreenNames, TextData } from "@/app/type/data-simulation";
 
 function GrowthCenterResultHeader() {
     return (
@@ -78,7 +79,10 @@ function ApprovalGauge({ value }: GaugeProps) {
     );
 }
 
-export default function TryItFirstScreen() {
+export default function TryItFirstScreen(
+    { controlNavigate, addMessagesControll }:
+        { controlNavigate: (d: ScreenNames) => void; addMessagesControll: (m: TextData) => void }
+) {
     return (
         <div className='w-full pb-6'>
             <GrowthCenterResultHeader />

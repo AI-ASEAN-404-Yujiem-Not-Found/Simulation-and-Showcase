@@ -11,25 +11,27 @@ import WelcomingScreen from "./component/simulation-screen/welcoming-screen";
 import MultiChoiceScreen from "./component/simulation-screen/multi-choice-screen";
 import TryItFirstScreen from "./component/simulation-screen/try-it-first-screen";
 import SaveModeScreen from "./component/simulation-screen/save-mode-screen";
-import { TextData } from "./type/data-simulation";
-
-interface ScreenSimulationPairing {
-    children: React.ReactNode;
-    needbotnav: boolean;
-    name: "splash" | "stt" | "welcome" | "multichoice" | "tryit" | "savemode";
-}
+import { ScreenNames, ScreenSimulationPairing, TextData } from "./type/data-simulation";
 
 export default function Page() {
-  const [activeScreen, setActiveScreen] = useState<"splash" | "stt" | "welcome" | "multichoice" | "tryit" | "savemode">("splash");
-  const [logdata, setlogdata] = useState<TextData[]>(StartingData)
+  const [activeScreen, setActiveScreen] = useState<ScreenNames>("splash");
+  const [logdata, setlogdata] = useState<TextData[]>(StartingData);
 
-  const screens : ScreenSimulationPairing[] = [
-    { name: "splash", needbotnav: false, children: <SplashScreen /> },
-    { name: "stt", needbotnav: false, children: <STTScreen /> },
-    { name: "welcome", needbotnav: false, children: <WelcomingScreen /> },
-    { name: "multichoice", needbotnav: false, children: <MultiChoiceScreen /> },
-    { name: "tryit", needbotnav: true, children: <TryItFirstScreen /> },
-    { name: "savemode", needbotnav: true, children: <SaveModeScreen /> },
+  const controlNavigate = (screen: ScreenNames) => {
+    setActiveScreen(screen)
+  }
+
+  const addMessagesControll = (message: TextData) => {
+    setlogdata(prev => [...prev, message])
+  }
+
+  const screens: ScreenSimulationPairing[] = [
+    { name: "splash", needbotnav: false, children: <SplashScreen addMessagesControll={addMessagesControll} controlNavigate={controlNavigate} /> },
+    { name: "stt", needbotnav: false, children: <STTScreen addMessagesControll={addMessagesControll} controlNavigate={controlNavigate} /> },
+    { name: "welcome", needbotnav: false, children: <WelcomingScreen addMessagesControll={addMessagesControll} controlNavigate={controlNavigate} /> },
+    { name: "multichoice", needbotnav: false, children: <MultiChoiceScreen addMessagesControll={addMessagesControll} controlNavigate={controlNavigate} /> },
+    { name: "tryit", needbotnav: true, children: <TryItFirstScreen addMessagesControll={addMessagesControll} controlNavigate={controlNavigate} /> },
+    { name: "savemode", needbotnav: true, children: <SaveModeScreen addMessagesControll={addMessagesControll} controlNavigate={controlNavigate} /> },
   ];
 
   return (

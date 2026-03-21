@@ -1,14 +1,16 @@
 import React from "react";
 import BottomNavigation from "./simulation-screen/bottom-navigation";
-import { ScreenSimulationPairing } from "../type/data-simulation";
+import { ScreenNames, ScreenSimulationPairing } from "../type/data-simulation";
 
 export default function PhoneFrame(
     {
         comp,
-        activeScreen
+        activeScreen,
+        controlNavigate
     }: {
         comp: ScreenSimulationPairing[];
         activeScreen: ScreenSimulationPairing["name"];
+        controlNavigate: (d: ScreenNames) => void;
     }
 ) {
     const current = comp.find(c => c.name === activeScreen);
@@ -24,7 +26,7 @@ export default function PhoneFrame(
 
             {current.needbotnav && (
                 <div className="absolute bottom-0 left-0 w-full">
-                    <BottomNavigation />
+                    <BottomNavigation controlNavigate={controlNavigate} />
                 </div>
             )}
         </div>

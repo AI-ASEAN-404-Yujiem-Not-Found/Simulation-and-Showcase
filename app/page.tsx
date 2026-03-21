@@ -12,6 +12,8 @@ import MultiChoiceScreen from "./component/simulation-screen/multi-choice-screen
 import TryItFirstScreen from "./component/simulation-screen/try-it-first-screen";
 import SaveModeScreen from "./component/simulation-screen/save-mode-screen";
 import { ScreenNames, ScreenSimulationPairing, TextData } from "./type/data-simulation";
+import OpportunityScreen from "./component/simulation-screen/opportunity-screen";
+import NavigationHelper from "./component/navigation-helper";
 
 export default function Page() {
   const [activeScreen, setActiveScreen] = useState<ScreenNames>("splash");
@@ -32,14 +34,16 @@ export default function Page() {
     { name: "multichoice", needbotnav: false, children: <MultiChoiceScreen addMessagesControll={addMessagesControll} controlNavigate={controlNavigate} /> },
     { name: "tryit", needbotnav: true, children: <TryItFirstScreen addMessagesControll={addMessagesControll} controlNavigate={controlNavigate} /> },
     { name: "savemode", needbotnav: true, children: <SaveModeScreen addMessagesControll={addMessagesControll} controlNavigate={controlNavigate} /> },
+    { name: "opportunity", needbotnav: true, children: <OpportunityScreen addMessagesControll={addMessagesControll} controlNavigate={controlNavigate} /> },
   ];
 
   return (
     <div className="w-full min-h-screen xl:h-screen p-10">
+      <NavigationHelper />
       <div className="w-full h-full flex items-start justify-between gap-5">
 
         <div className="w-full h-full xl:w-[60%] flex justify-center items-center">
-          <PhoneFrame comp={screens} activeScreen={activeScreen} />
+          <PhoneFrame comp={screens} activeScreen={activeScreen} controlNavigate={controlNavigate} />
         </div>
 
         <div className="w-full xl:w-[40%] bg-white rounded-md">

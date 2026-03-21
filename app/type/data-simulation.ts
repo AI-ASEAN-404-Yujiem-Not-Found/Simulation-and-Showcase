@@ -39,4 +39,4 @@ export interface ScreenSimulationPairing {
     name: ScreenNames;
 }
 
-export type ScreenNames = "splash" | "stt" | "welcome" | "multichoice" | "tryit" | "savemode"
+export type ScreenNames = "splash" | "stt" | "welcome" | "multichoice" | "tryit" | "savemode" | "opportunity";
